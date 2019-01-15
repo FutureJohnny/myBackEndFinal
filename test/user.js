@@ -9,7 +9,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../bin/www');
 let should = chai.should();
-let expect = chai.expect();
+let expect = chai.expect;
+
 
 chai.use(chaiHttp);
 
@@ -31,7 +32,7 @@ describe('Create Account, Login and Check Token', () => {
         it('it should Register, Login and check token', (done) => {
             chai.request(server)
                 .post('/api/signup')
-                .send(login_details) // This is like sending $http.post or this.http.post in Angular
+                .send(login_details)// This is like sending $http.post or this.http.post in Angular
                 .end((err, res) => { // When we get a response from the endpoint
                 // The res object should have status of 200
                 res.should.have.status(200);
@@ -39,7 +40,7 @@ describe('Create Account, Login and Check Token', () => {
                 chai.request(server)
                     .post('/api/signin')
                     .send(login_details)
-                    .end((err,res) => {
+                    .end((err, res) => {
                         console.log('This runs the login part');
                         res.should.have.status(200);
                         expect(res.body.success).to.be.true;
@@ -49,7 +50,7 @@ describe('Create Account, Login and Check Token', () => {
                         chai.request(server)
                             .get('/api/film')
                             // We set the auth header with our token
-                            .set('Authorisation', token)
+                            .set('Authorization', token)
                             .end((err, res) => {
                                 console.log('Testing token');
                                 res.should.have.status(200);
