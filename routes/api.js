@@ -121,7 +121,7 @@ router.get('/film:id', passport.authenticate('jwt', {session: false}), function(
     if (token) {
         console.log("The id is: ");
         console.log(req.params.id);
-        Film.findById(new mongoose.TypesObjectId(req.params.id), function(err, post) {
+        Film.findById(new mongoose.Types.ObjectId(req.params.id), function(err, post) {
             if(err) return next(err);
             res.json(post);
         });
@@ -133,13 +133,30 @@ router.get('/film:id', passport.authenticate('jwt', {session: false}), function(
 
 // Update film review
 router.put('/film:id', passport.authenticate('jwt', {session: false}), function(req, res, next) {
-
+    var token = getToken(req.headers);
+    if (token) {
+        Film.findOneAndUpdate({'_id':req.params.id}, req.body, function(err, post) {
+            if (err) return next(err);
+            res.json(post);
+        });
+    }
+    else {
+        return res.status(403).send({success: false, msg: 'Unauthorized.'});
+    }
 });
 
 // Delete film
 router.delete('/film:id', passport.authenticate('jwt', {session: false}), function(req, res, next) {
-
+    var token = getToken(req.headers);
+    if (token) {
+        Film.findOneAndDelete({'_id':req.params.id}, req.body, function(err, post) {
+            if (err) return next(err);
+            res.json(post);
+        });
+    }
+    else {
+        return res.status(403).send({success: false, msg: 'Unauthorized.'});
+    }
 });
 
 module.exports = router;
-
