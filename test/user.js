@@ -29,7 +29,7 @@ describe('Create Account, Login and Check Token', () => {
     });
 
     describe('/POST Register', () => {
-        it('it should Register, Login and check token', (done) => {
+        it('It should register, log-in and check token', (done) => {
             chai.request(server)
                 .post('/api/signup')
                 .send(login_details)// This is like sending $http.post or this.http.post in Angular

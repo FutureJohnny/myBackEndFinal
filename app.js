@@ -29,7 +29,6 @@ app.use(passport.initialize());
 try {
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
-    mongoose.connect(config.database);
     if (process.env.NODE_ENV === 'test') {
         console.log("*******************");
         console.log("Using test database");
